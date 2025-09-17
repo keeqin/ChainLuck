@@ -34,13 +34,14 @@ contract ChainLuck {
         currentState = GameState.NotStarted;
         owner = msg.sender;
         numberOfCompletedGames = 0;
-        winningsMultiplier = 4;
-        minimumInvestmentAmount = 1 ether;
+        winningsMultiplier = 100;
+        minimumInvestmentAmount = 0.0005 ether;
         numberOfPlayers = 0;
     }
 
     function startGame() external onlyOwner {
-        currentState = GameState.Reveal;
+        require(currentState == GameState.NotStarted, "Game is not in not started");
+        currentState = GameState.InProgress;
         numberOfPlayers = 0;
     }
 
