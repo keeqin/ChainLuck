@@ -3,7 +3,6 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 import {ChainLuck} from "../src/ChainLuck.sol";
-import {console} from "forge-std/console.sol";
 
 contract ChainLuckTest is Test {
     ChainLuck public chainLuck;
