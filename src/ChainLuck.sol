@@ -69,19 +69,22 @@ contract ChainLuck {
     }
 
     function revealState() external onlyOwner {
+        require(currentState == GameState.InProgress, "Game is not InProgress");
         currentState = GameState.Reveal;
     }
 
     function endGame() external onlyOwner returns (uint256, address) {
-        require(currentState != GameState.Reveal, "Game is not in reveal state");
-        require(numberOfPlayers > 100, "No players have joined the game");
+        require(currentState == GameState.Reveal, "Game is not in reveal state");
+        require(numberOfPlayers > 0, "No players have joined the game");
 
         uint256 winnerIndex = randomNumberSum % numberOfPlayers;
         for (uint256 i = 0; i < numberOfPlayers; i++) {
             address playerAddress = playerList[i];
             if (!players[playerAddress].hasRevealed) {
                 winnerIndex = (winnerIndex + 1) % numberOfPlayers;
+                continue;
             }
+            break;
         }
         address winnerAddress = playerList[winnerIndex];
 
